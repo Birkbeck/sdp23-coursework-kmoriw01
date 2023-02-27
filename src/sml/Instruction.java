@@ -1,11 +1,12 @@
 package sml;
 
-// TODO: write a JavaDoc for the class
+// TODO: write a JavaDoc for the class  -- done
 
 /**
  * Represents an abstract instruction.
  *
- * @author ...
+ * @author Kenichi Moriwaki (Github User: kmoriw01)
+ * @version 0.1
  */
 public abstract class Instruction {
 	protected final String label;
@@ -48,10 +49,21 @@ public abstract class Instruction {
 		return (getLabel() == null) ? "" : getLabel() + ": ";
 	}
 
-	// TODO: What does abstract in the declaration below mean?
-	//       (Write a short explanation.)
+	// TODO: What does abstract in the declaration below mean?   -- done
+	// Answer: The abstract keyword is used to indicate that
+	// the toString() method declared in the class is an abstract method.
+	// An abstract method is a method that is declared in an abstract class,
+	// but not implemented in that class.
+	// Instead, any concrete subclass that extends the abstract class must
+	// provide an implementation for the abstract method.
+
+
 	@Override
 	public abstract String toString();
 
-	// TODO: Make sure that subclasses also implement equals and hashCode (needed in class Machine).
+	// TODO: Make sure that subclasses also implement equals and hashCode (needed in class Machine).   -- done
+
+	public abstract boolean equals(Machine machine);
+	public abstract int hashCode();
+
 }
