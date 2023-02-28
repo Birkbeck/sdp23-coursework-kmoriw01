@@ -20,6 +20,7 @@ public abstract class Instruction {
 	 * @param opcode operation name
 	 */
 	public Instruction(String label, String opcode) {
+		// constructor label and opcode
 		this.label = label;
 		this.opcode = opcode;
 	}
@@ -46,7 +47,7 @@ public abstract class Instruction {
 	public abstract int execute(Machine machine);
 
 	protected String getLabelString() {
-		return (getLabel() == null) ? "" : getLabel() + ": ";
+		return (getLabel() == null) ? "" : getLabel() + ": " + getOpcode();
 	}
 
 	// TODO: What does abstract in the declaration below mean?   -- done
@@ -62,8 +63,4 @@ public abstract class Instruction {
 	public abstract String toString();
 
 	// TODO: Make sure that subclasses also implement equals and hashCode (needed in class Machine).   -- done
-
-	public abstract boolean equals(Machine machine);
-	public abstract int hashCode();
-
 }
