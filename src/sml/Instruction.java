@@ -47,7 +47,7 @@ public abstract class Instruction {
 	public abstract int execute(Machine machine);
 
 	protected String getLabelString() {
-		return (getLabel() == null) ? "" : getLabel() + ": " + getOpcode();
+		return (getLabel() == null) ? "" : getLabel() + ": ";
 	}
 
 	// TODO: What does abstract in the declaration below mean?   -- done
@@ -58,9 +58,14 @@ public abstract class Instruction {
 	// Instead, any concrete subclass that extends the abstract class must
 	// provide an implementation for the abstract method.
 
-
 	@Override
 	public abstract String toString();
 
 	// TODO: Make sure that subclasses also implement equals and hashCode (needed in class Machine).   -- done
+
+	@Override
+	public abstract boolean equals(Object obj);
+	@Override
+	public abstract int hashCode();
+
 }
