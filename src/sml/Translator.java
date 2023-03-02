@@ -11,11 +11,11 @@ import java.util.Scanner;
 import static sml.Registers.Register;
 
 /**
- * This class ....
+ * This class represents a translator
  * <p>
  * The translator of a <b>S</b><b>M</b>al<b>L</b> program.
  *
- * @author ...
+ * @author kmoriw01
  */
 public final class Translator {
 
@@ -67,6 +67,7 @@ public final class Translator {
 
         String opcode = scan();
         switch (opcode) {
+            // add instruction
             case AddInstruction.OP_CODE -> {
                 String r = scan();
                 String s = scan();
@@ -75,10 +76,52 @@ public final class Translator {
 
             // TODO: add code for all other types of instructions
 
+            // sub instruction
+            case SubInstruction.OP_CODE -> {
+                String r = scan();
+                String s = scan();
+                return new SubInstruction(label, Register.valueOf(r), Register.valueOf(s));
+            }
+
+            // mul instruction
+            case MulInstruction.OP_CODE -> {
+                String r = scan();
+                String s = scan();
+                return new MulInstruction(label, Register.valueOf(r), Register.valueOf(s));
+            }
+
+            // div instruction
+            case DivInstruction.OP_CODE -> {
+                String r = scan();
+                String s = scan();
+                return new DivInstruction(label, Register.valueOf(r), Register.valueOf(s));
+            }
+
+            // out instruction
+            case OutInstruction.OP_CODE -> {
+                String s = scan();
+                return new OutInstruction(label, Register.valueOf(s));
+            }
+
+            // mov instruction
+            case MovInstruction.OP_CODE -> {
+                String r = scan();
+                int x = Integer.parseInt(scan());
+                return new MovInstruction(label, Register.valueOf(r), x);
+            }
+
+            // jnz instruction
+            case JnzInstruction.OP_CODE -> {
+                String s = scan();
+                String L = scan();
+                return new JnzInstruction(label, Register.valueOf(s), L);
+            }
+
             // TODO: Then, replace the switch by using the Reflection API
 
             // TODO: Next, use dependency injection to allow this machine class
             //       to work with different sets of opcodes (different CPUs)
+
 
             default -> {
                 System.out.println("Unknown instruction: " + opcode);
