@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 
 // TODO: write a JavaDoc for the class
 
-/**
+/** This represents a label class
  *
  * @author kmoriw01
  */
@@ -73,7 +73,7 @@ public final class Labels {
 				.collect(Collectors.joining(", ", "[", "]")) ;
 	}
 
-	// TODO: Implement equals and hashCode (needed in class Machine).
+	// TODO: Implement equals and hashCode (needed in class Machine). -- done
 
 	@Override
 	public boolean equals(Object o){
