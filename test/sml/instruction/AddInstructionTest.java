@@ -19,7 +19,6 @@ class AddInstructionTest {
   void setUp() {
     machine = new Machine(new Registers());
     registers = machine.getRegisters();
-    //...
   }
 
   @AfterEach
@@ -45,4 +44,5 @@ class AddInstructionTest {
     instruction.execute(machine);
     Assertions.assertEquals(1, machine.getRegisters().get(EAX));
   }
+
 }
