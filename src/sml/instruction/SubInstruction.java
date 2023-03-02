@@ -4,6 +4,8 @@ import sml.Instruction;
 import sml.Machine;
 import sml.RegisterName;
 
+import java.util.Objects;
+
 // TODO: write a JavaDoc for the class
 
 /**
@@ -14,7 +16,6 @@ import sml.RegisterName;
 public class SubInstruction extends Instruction {
     private final RegisterName result;
     private final RegisterName source;
-
     public static final String OP_CODE = "sub";
 
     public SubInstruction(String label, RegisterName result, RegisterName source) {
@@ -34,5 +35,21 @@ public class SubInstruction extends Instruction {
     @Override
     public String toString() {
         return getLabelString() + getOpcode() + " " + result + " " + source;
+    }
+
+    @Override
+    public boolean equals(Object o){
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()){
+            return false;
+        }
+        SubInstruction that = (SubInstruction) o;
+        return Objects.equals(this.label, that.label) && result.equals(that.result) && source.equals(that.source);
+    }
+    @Override
+    public int hashCode(){
+        return Objects.hash(result,source);
     }
 }
