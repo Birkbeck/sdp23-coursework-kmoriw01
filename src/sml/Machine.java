@@ -11,7 +11,7 @@ import static sml.Instruction.NORMAL_PROGRAM_COUNTER_UPDATE;
  * Represents the machine, the context in which programs run.
  * <p>
  * An instance contains 32 registers and methods to access and change them.
- *
+ * @author kmoriw01
  */
 public final class Machine {
 
@@ -70,13 +70,18 @@ public final class Machine {
 				.collect(Collectors.joining("\n"));
 	}
 
-	// TODO: use pattern matching for instanceof
+	// TODO: use pattern matching for instanceof -- done
 	// https://docs.oracle.com/en/java/javase/14/language/pattern-matching-instanceof-operator.html
 	@Override
 	public boolean equals(Object o) {
-		if (o instanceof Machine) {
-			// TODO:
-			Machine other = (Machine) o;
+		if (o instanceof Machine other) {
+			// TODO: -- done
+			// The instanceof operator is followed by the name of a new variable other,
+			// which is declared and initialized with the value of o only if o is an instance of Machine.
+			// The if statement then continues as before, comparing the fields of this object
+			// with the corresponding fields of other object.
+			// "Machine other = (Machine) o;" has been omitted.
+
 			return Objects.equals(this.labels, other.labels)
 					&& Objects.equals(this.program, other.program)
 					&& Objects.equals(this.registers, other.registers)
