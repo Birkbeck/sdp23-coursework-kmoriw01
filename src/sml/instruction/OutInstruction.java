@@ -6,7 +6,7 @@ import sml.RegisterName;
 
 import java.util.Objects;
 
-// TODO: write a JavaDoc for the class
+// TODO: write a JavaDoc for the class -- done
 
 /**
  * This class is for "out" instruction
