@@ -2,13 +2,14 @@ package sml;
 
 import sml.instruction.*;
 
+import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Scanner;
-
 import static sml.Registers.Register;
+import java.lang.reflect.*;
 
 /**
  * This class represents a translator
@@ -66,6 +67,9 @@ public final class Translator {
             return null;
 
         String opcode = scan();
+
+/*  commented out switch block - hidden in IntelliJ
+
         switch (opcode) {
             // add instruction
             case AddInstruction.OP_CODE -> {
@@ -116,21 +120,64 @@ public final class Translator {
                 String L = scan();
                 return new JnzInstruction(label, Register.valueOf(s), L);
             }
+*/
+        // TODO: Then, replace the switch by using the Reflection API
 
-            // TODO: Then, replace the switch by using the Reflection API
+        // TODO: Next, use dependency injection to allow this machine class
+        //       to work with different sets of opcodes (different CPUs)
 
-            // TODO: Next, use dependency injection to allow this machine class
-            //       to work with different sets of opcodes (different CPUs)
+        // dynamically loading and constructing an instance of a class
+        // based on the value given by opcode.
 
+        try {
+            String r = scan();
+            String s = scan();
 
-            default -> {
-                System.out.println("Unknown instruction: " + opcode);
+            // take opcode and construct a class name
+            String className = opcode.substring(0, 1).toUpperCase() + opcode.substring(1, 3) + "Instruction";
+            // loads the class with fully qualified name
+            Class<?> clazz = Class.forName("sml.instruction." + className);
+            // retrieve constructor objects for the class
+            Constructor<?>[] constructors = clazz.getDeclaredConstructors();
+            // loop over each constructor in constructors
+            for (Constructor<?> constructor : constructors) {
+                // retrieve array of class objects representing parameter types of the constructor
+                Class<?>[] parameterTypes = constructor.getParameterTypes();
+                // retrieve a constructor object matching given parameter types
+                Constructor<?> cons = clazz.getConstructor(parameterTypes);
+                // declare object array
+                Object[] parameters;
+                // if it takes 2 parameters
+                if (parameterTypes.length == 2) {
+                    parameters = new Object[]{
+                            label, Register.valueOf(r)
+                    };
+                    // third parameter is int
+                } else if (parameterTypes[2].equals(int.class)) {
+                    parameters = new Object[]{
+                            label, Register.valueOf(r), Integer.parseInt(s)
+                    };
+                    // third parameter is of type RegisterName
+                } else if (parameterTypes[2].equals(RegisterName.class)) {
+                    parameters = new Object[]{
+                            label, Register.valueOf(r), Integer.parseInt(s)
+                    };
+                } else {
+                    parameters = new Object[]{
+                            label, Register.valueOf(r), s
+                    };
+                }
+                // create a new instance by invoking the constructor with the parameters
+                // cast to instruction interface and retunred as the result
+                return (Instruction) cons.newInstance(parameters);
             }
+            // error handling and print the stacktrace
+        } catch (ClassNotFoundException | IllegalAccessException | InvocationTargetException
+                 | InstantiationException | NoSuchMethodException e) {
+            e.printStackTrace();
         }
         return null;
     }
-
-
     private String getLabel() {
         String word = scan();
         if (word.endsWith(":"))
