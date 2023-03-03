@@ -68,7 +68,7 @@ public final class Translator {
 
         String opcode = scan();
 
-/*  commented out switch block - hidden in IntelliJ
+/*  commented out switch & reflection blocks - hidden in IntelliJ
 
         switch (opcode) {
             // add instruction
@@ -120,7 +120,6 @@ public final class Translator {
                 String L = scan();
                 return new JnzInstruction(label, Register.valueOf(s), L);
             }
-*/
         // TODO: Then, replace the switch by using the Reflection API
 
         // TODO: Next, use dependency injection to allow this machine class
@@ -178,6 +177,17 @@ public final class Translator {
         }
         return null;
     }
+*/
+
+        String r = scan();
+        String s = scan();
+
+        InstructionFactory factory = new InstructionFactory();
+        Instruction instruction = factory.createInstruction(label, opcode, r, s);
+
+        return instruction;
+    }
+
     private String getLabel() {
         String word = scan();
         if (word.endsWith(":"))
